@@ -1,0 +1,208 @@
+<div class="add-lead-container">
+
+  <mat-card class="lead-card">
+
+    <h1>Add New Lead</h1>
+
+    <form
+      [formGroup]="leadForm"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <div class="form-grid">
+
+        <!-- Recruiter Name -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Recruiter Name
+          </mat-label>
+
+          <input
+            matInput
+            formControlName="recruiterName"
+          >
+
+        </mat-form-field>
+
+        <!-- Company Name -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Company Name
+          </mat-label>
+
+          <input
+            matInput
+            formControlName="companyName"
+          >
+
+        </mat-form-field>
+
+        <!-- Contact Number -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Contact Number
+          </mat-label>
+
+          <input
+            matInput
+            formControlName="contactNumber"
+          >
+
+        </mat-form-field>
+
+        <!-- CCTC -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Current CTC
+          </mat-label>
+
+          <input
+            matInput
+            formControlName="cctc"
+          >
+
+        </mat-form-field>
+
+        <!-- ECTC -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Expected CTC
+          </mat-label>
+
+          <input
+            matInput
+            formControlName="ectc"
+          >
+
+        </mat-form-field>
+
+        <!-- Job Type -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Job Type
+          </mat-label>
+
+          <mat-select formControlName="jobType">
+
+            <mat-option value="Remote">
+              Remote
+            </mat-option>
+
+            <mat-option value="Hybrid">
+              Hybrid
+            </mat-option>
+
+            <mat-option value="Full Time">
+              Full Time
+            </mat-option>
+
+            <mat-option value="Contract">
+              Contract
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+  <mat-label>
+    Status
+  </mat-label>
+
+  <mat-select formControlName="status">
+
+    <mat-option value="Applied">
+      Applied
+    </mat-option>
+
+    <mat-option value="HR Round">
+      HR Round
+    </mat-option>
+
+    <mat-option value="Technical Interview">
+      Technical Interview
+    </mat-option>
+
+    <mat-option value="Rejected">
+      Rejected
+    </mat-option>
+
+    <mat-option value="Offer Received">
+      Offer Received
+    </mat-option>
+
+  </mat-select>
+
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+
+  <mat-label>
+    Follow-up Date
+  </mat-label>
+
+  <input
+    matInput
+
+    [matDatepicker]="picker"
+
+    formControlName="followUpDate"
+  >
+
+  <mat-datepicker-toggle
+    matIconSuffix
+    [for]="picker"
+  ></mat-datepicker-toggle>
+
+  <mat-datepicker #picker></mat-datepicker>
+
+</mat-form-field>
+
+      </div>
+
+      <!-- Notes -->
+
+      <mat-form-field
+        appearance="outline"
+        class="notes-field"
+      >
+
+        <mat-label>
+          Notes
+        </mat-label>
+
+        <textarea
+          matInput
+          rows="4"
+          formControlName="notes"
+        ></textarea>
+
+      </mat-form-field>
+
+      <!-- Button -->
+
+      <button
+        mat-raised-button
+        type="submit"
+      >
+        Save Lead
+      </button>
+
+    </form>
+
+  </mat-card>
+
+</div>

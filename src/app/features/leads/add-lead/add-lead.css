@@ -1,0 +1,39 @@
+.add-lead-container {
+  padding: 24px;
+}
+
+.lead-card {
+  padding: 24px;
+
+  border-radius: 20px;
+}
+
+h1 {
+  margin-bottom: 24px;
+}
+
+form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 20px;
+}
+
+.notes-field {
+  width: 100%;
+}
+
+button {
+  width: 180px;
+
+  height: 48px;
+}

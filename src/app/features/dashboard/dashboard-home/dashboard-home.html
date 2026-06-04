@@ -1,0 +1,331 @@
+<h1>
+  Dashboard
+</h1>
+<button
+  mat-raised-button
+  color="warn"
+  (click)="logout()">
+  Logout
+</button>
+
+<div class="stats-grid">
+
+  <!-- Total Leads -->
+
+  <mat-card class="stats-card">
+
+    <h3>Total Leads</h3>
+
+    <h1>
+      {{ totalLeads() }}
+    </h1>
+
+  </mat-card>
+
+  <!-- Remote Jobs -->
+
+  <mat-card class="stats-card">
+
+    <h3>Remote Jobs</h3>
+
+    <h1>
+      {{ remoteJobs() }}
+    </h1>
+
+  </mat-card>
+
+  <!-- Highest ECTC -->
+
+  <mat-card class="stats-card">
+
+    <h3>Highest ECTC</h3>
+
+    <h1>
+      ₹ {{ highestECTC() }} LPA
+    </h1>
+
+  </mat-card>
+
+  @if (upcomingFollowUps().length > 0) {
+
+  <mat-card class="follow-up-card">
+
+    <h2>
+      Upcoming Follow-ups
+    </h2>
+
+    @for (
+      lead of upcomingFollowUps();
+      track lead.id
+    ) {
+
+      <div class="follow-up-item">
+
+        <strong>
+          {{ lead.recruiterName }}
+        </strong>
+
+        <span>
+          {{ lead.followUpDate | date }}
+        </span>
+
+      </div>
+
+    }
+
+  </mat-card>
+
+}
+</div>
+
+<div class="top-controls">
+
+  <!-- Search -->
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Search
+    </mat-label>
+
+    <input
+      matInput
+      placeholder="Recruiter or Company"
+
+      [ngModel]="searchText()"
+
+      (ngModelChange)="searchText.set($event)"
+    >
+
+  </mat-form-field>
+
+  <!-- Filter -->
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Job Type
+    </mat-label>
+
+    <mat-select
+
+      [ngModel]="selectedJobType()"
+
+      (ngModelChange)="selectedJobType.set($event)"
+    >
+
+      <mat-option value="">
+        All
+      </mat-option>
+
+      <mat-option value="Remote">
+        Remote
+      </mat-option>
+
+      <mat-option value="Hybrid">
+        Hybrid
+      </mat-option>
+
+      <mat-option value="Full Time">
+        Full Time
+      </mat-option>
+
+      <mat-option value="Contract">
+        Contract
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+
+  <mat-label>
+    Status
+  </mat-label>
+
+  <mat-select
+
+    [ngModel]="selectedStatus()"
+
+    (ngModelChange)="selectedStatus.set($event)"
+  >
+
+    <mat-option value="">
+      All
+    </mat-option>
+
+    <mat-option value="Applied">
+      Applied
+    </mat-option>
+
+    <mat-option value="HR Round">
+      HR Round
+    </mat-option>
+
+    <mat-option value="Technical Interview">
+      Technical Interview
+    </mat-option>
+
+    <mat-option value="Rejected">
+      Rejected
+    </mat-option>
+
+    <mat-option value="Offer Received">
+      Offer Received
+    </mat-option>
+
+  </mat-select>
+
+</mat-form-field>
+
+</div>
+
+@if (leads().length === 0) {
+
+  <p>
+    No leads available.
+  </p>
+
+}
+
+@for (lead of filteredLeads(); track lead.id) {
+  <div class="lead-container">
+
+  <div class="lead-header">
+
+  <div>
+
+    <h2>
+      {{ lead.recruiterName }}
+    </h2>
+
+    <p class="company-name">
+      {{ lead.companyName }}
+    </p>
+
+  </div>
+
+  <mat-chip
+  [class.applied-chip]="lead.status === 'Applied'"
+
+  [class.hr-chip]="lead.status === 'HR Round'"
+
+  [class.tech-chip]="lead.status === 'Technical Interview'"
+
+  [class.offer-chip]="lead.status === 'Offer Received'"
+
+  [class.rejected-chip]="lead.status === 'Rejected'"
+>
+
+  {{ lead.status }}
+
+</mat-chip>
+
+</div>
+
+<div class="lead-details">
+
+  <div class="detail-item">
+
+  <mat-icon>
+    event
+  </mat-icon>
+
+  <span>
+
+    Follow-up:
+
+    {{ lead.followUpDate | date }}
+
+  </span>
+
+</div>
+
+  <div class="detail-item">
+
+    <mat-icon>
+      call
+    </mat-icon>
+
+    <span>
+      {{ lead.contactNumber }}
+    </span>
+
+  </div>
+
+  <div class="detail-item">
+
+    <mat-icon>
+      currency_rupee
+    </mat-icon>
+
+    <span>
+      CCTC: {{ lead.cctc }} LPA
+    </span>
+
+  </div>
+
+  <div class="detail-item">
+
+    <mat-icon>
+      trending_up
+    </mat-icon>
+
+    <span>
+      ECTC: {{ lead.ectc }} LPA
+    </span>
+
+  </div>
+
+</div>
+
+@if (lead.notes) {
+
+  <div class="notes-section">
+
+    <h4>
+      Notes
+    </h4>
+
+    <p>
+      {{ lead.notes }}
+    </p>
+
+  </div>
+
+}
+
+<div class="action-buttons">
+
+  <button
+    mat-raised-button
+    [routerLink]="['/dashboard/edit-lead', lead.id]"
+  >
+
+    <mat-icon>
+      edit
+    </mat-icon>
+
+    Edit
+
+  </button>
+
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteLead(lead.id)"
+  >
+
+    <mat-icon>
+      delete
+    </mat-icon>
+
+    Delete
+
+  </button>
+
+</div>
+</div>
+
+}

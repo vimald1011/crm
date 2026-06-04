@@ -1,0 +1,11 @@
+.logo-text {
+  text-align: center;
+
+  margin-bottom: 30px;
+}
+
+.active-link {
+  background: rgba(0, 0, 0, 0.08);
+
+  border-radius: 10px;
+}

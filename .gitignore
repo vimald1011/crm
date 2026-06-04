@@ -42,3 +42,27 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Angular
+node_modules/
+dist/
+.angular/
+
+# Python
+venv/
+.venv/
+.venv-1/
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Environment Variables
+.env
+
+# Database
+*.db
+
+# macOS
+.DS_Store
