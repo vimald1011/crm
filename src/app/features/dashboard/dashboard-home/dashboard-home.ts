@@ -1,4 +1,4 @@
-import { Component, computed, inject, Pipe, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, Pipe, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Lead } from '../../../core/services/lead';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +32,7 @@ import { Auth } from '../../../core/services/auth';
   templateUrl: './dashboard-home.html',
   styleUrl: './dashboard-home.css',
 })
-export class DashboardHome {
+export class DashboardHome implements OnInit {
 
   searchText = signal('');
   selectedStatus = signal('');
@@ -41,6 +41,9 @@ export class DashboardHome {
   private dialog = inject(MatDialog);
   private auth = inject(Auth);
 
+  ngOnInit(): void {
+  this.leadService.getLeads();
+}
 
   filteredLeads = computed(() => {
 
