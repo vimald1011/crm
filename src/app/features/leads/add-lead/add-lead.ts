@@ -84,6 +84,11 @@ export class AddLead {
       Validators.required
     ],
 
+    candidateName: [
+      '',
+      Validators.required
+    ],
+
     createdDate: [
       new Date().toISOString()
     ],

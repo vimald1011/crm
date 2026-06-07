@@ -20,6 +20,8 @@ class Lead(Base):
 
     status = Column(String, nullable=False)
 
+    candidateName = Column(String, nullable=False)
+
     createdDate = Column(String, nullable=True)
     followUpDate = Column(String, nullable=True)
 

@@ -57,6 +57,8 @@ def create_lead(
 
         status=lead.status,
 
+        candidateName=lead.candidateName,
+
         createdDate=lead.createdDate,
         followUpDate=lead.followUpDate,
 
@@ -133,6 +135,8 @@ def update_lead(
     lead.jobType = updated_lead.jobType
 
     lead.status = updated_lead.status
+
+    lead.candidateName = update_lead.candidateName
 
     lead.createdDate = updated_lead.createdDate
     lead.followUpDate = updated_lead.followUpDate

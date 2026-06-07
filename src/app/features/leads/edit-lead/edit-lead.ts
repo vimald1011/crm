@@ -80,6 +80,11 @@ export class EditLead {
       Validators.required
     ],
 
+    candidateName: [
+      '',
+      Validators.required
+    ],
+
     createdDate: [
       this.currentLead?.createdDate || ''
     ],

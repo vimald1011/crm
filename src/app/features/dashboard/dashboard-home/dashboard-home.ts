@@ -73,7 +73,15 @@ export class DashboardHome implements OnInit {
 
       ||
 
-      lead.jobType === this.selectedJobType();
+      lead.jobType === this.selectedJobType()
+      
+      ||
+
+      lead.candidateName
+      .toLowerCase()
+      .includes(
+        this.searchText().toLowerCase()
+      );
 
       const matchesStatus =
 

@@ -13,6 +13,8 @@ class LeadCreate(BaseModel):
 
     status: str
 
+    candidateName: str
+
     createdDate: str | None = None
     followUpDate: str | None = None
 
@@ -32,6 +34,8 @@ class LeadResponse(BaseModel):
     jobType: str
 
     status: str
+
+    candidateName: str
 
     createdDate: str | None = None
     followUpDate: str | None = None
