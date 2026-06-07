@@ -37,9 +37,27 @@ export class Auth {
 
   constructor() {
 
+    const loggedIn =
+      this.storage.isLoggedIn();
+
     this.isAuthenticated.set(
-      this.storage.isLoggedIn()
+      loggedIn
     );
+
+    if (loggedIn) {
+
+      this.getCurrentUser()
+        .subscribe({
+
+          error: () => {
+
+            this.logout();
+
+          }
+
+        });
+
+    }
 
   }
 
