@@ -28,7 +28,17 @@ export class Lead {
   this.http.get<LeadModel[]>(url)
     .subscribe({
       next: (response) => {
-        this.leads.set(response);
+
+        const sortedLeads = response.sort(
+          (a, b) =>
+            new Date(b.createdDate).getTime() -
+            new Date(a.createdDate).getTime()
+        );
+
+        this.leads.set(
+          sortedLeads
+        );
+
       },
       error: (error) => {
         console.error('Error fetching leads:', error);
