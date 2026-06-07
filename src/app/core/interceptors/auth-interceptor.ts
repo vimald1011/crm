@@ -36,14 +36,29 @@ export const authInterceptor: HttpInterceptorFn = (
 
       if (error.status === 401) {
 
-        localStorage.removeItem(
-          'token'
+        localStorage.removeItem('token');
+
+        console.warn(
+          'Session expired. Redirecting to login.'
         );
 
         router.navigate([
           '/login'
         ]);
+      }
 
+      if (error.status === 0) {
+
+        console.error(
+          'Unable to connect to backend server.'
+        );
+      }
+
+      if (error.status >= 500) {
+
+        console.error(
+          'Server error occurred.'
+        );
       }
 
       return throwError(
