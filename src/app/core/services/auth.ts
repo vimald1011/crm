@@ -6,12 +6,14 @@ import {
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
+import { tap } from 'rxjs/operators';
+
 import {
   LoginRequest,
   SignupRequest,
-  AuthResponse
+  AuthResponse,
+  CurrentUser
 } from '../models/user.model';
-
 import { Storage } from './storage';
 import { Router } from '@angular/router';
 
@@ -28,6 +30,10 @@ export class Auth {
   `${environment.apiBaseUrl}/auth`;
 
   isAuthenticated = signal(false);
+
+  currentUser = signal<CurrentUser | null>(
+    null
+  );
 
   constructor() {
 
@@ -86,9 +92,27 @@ export class Auth {
           true
         );
 
-        if (callback) {
-          callback();
-        }
+        this.getCurrentUser()
+          .subscribe({
+
+            next: () => {
+
+              if (callback) {
+                callback();
+              }
+
+            },
+
+            error: (error) => {
+
+              console.error(
+                'Failed to load user:',
+                error
+              );
+
+            }
+
+          });
 
       },
 
@@ -102,6 +126,26 @@ export class Auth {
       }
 
     });
+
+  }
+
+  getCurrentUser() {
+
+    return this.http
+      .get<CurrentUser>(
+        `${this.apiUrl}/me`
+      )
+      .pipe(
+
+        tap(user => {
+
+          this.currentUser.set(
+            user
+          );
+
+        })
+
+      );
 
   }
 
