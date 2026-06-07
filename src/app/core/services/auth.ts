@@ -44,20 +44,24 @@ export class Auth {
       loggedIn
     );
 
-    if (loggedIn) {
+    if (!loggedIn) {
 
-      this.getCurrentUser()
-        .subscribe({
+      this.storage.clearSession();
 
-          error: () => {
-
-            this.logout();
-
-          }
-
-        });
+      return;
 
     }
+
+    this.getCurrentUser()
+      .subscribe({
+
+        error: () => {
+
+          this.logout();
+
+        }
+
+      });
 
   }
 

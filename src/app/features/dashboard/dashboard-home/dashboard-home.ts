@@ -42,8 +42,10 @@ export class DashboardHome implements OnInit {
   private auth = inject(Auth);
 
   ngOnInit(): void {
-  this.leadService.getLeads();
-}
+    this.leadService.getLeads();
+  }
+
+  currentUser = this.auth.currentUser;
 
   filteredLeads = computed(() => {
 

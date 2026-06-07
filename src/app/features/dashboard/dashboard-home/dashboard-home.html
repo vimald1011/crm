@@ -1,12 +1,29 @@
-<h1>
-  Dashboard
-</h1>
-<button
-  mat-raised-button
-  color="warn"
-  (click)="logout()">
-  Logout
-</button>
+<div class="dashboard-header">
+
+  <div>
+
+    <h1>
+      Welcome,
+      {{ currentUser()?.fullName || 'User' }}
+      🙏
+    </h1>
+
+    <p class="header-subtitle">
+      Manage your recruitment pipeline
+    </p>
+
+  </div>
+
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="logout()">
+
+    Logout
+
+  </button>
+
+</div>
 
 <div class="stats-grid">
 
