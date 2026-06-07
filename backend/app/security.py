@@ -1,8 +1,16 @@
 from datetime import datetime, timedelta
 from jose import jwt
 from passlib.context import CryptContext
+from dotenv import load_dotenv
+import os
 
-SECRET_KEY = "your-secret-key"
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable is not set")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
@@ -11,8 +19,10 @@ pwd_context = CryptContext(
     deprecated="auto"
 )
 
+
 def hashPassword(password: str):
     return pwd_context.hash(password)
+
 
 def verifyPassword(
     plainPassword: str,
@@ -22,6 +32,7 @@ def verifyPassword(
         plainPassword,
         hashedPassword
     )
+
 
 def createAccessToken(data: dict):
     to_encode = data.copy()
