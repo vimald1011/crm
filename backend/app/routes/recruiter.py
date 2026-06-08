@@ -136,7 +136,7 @@ def update_lead(
 
     lead.status = updated_lead.status
 
-    lead.candidateName = update_lead.candidateName
+    lead.candidateName = updated_lead.candidateName
 
     lead.createdDate = updated_lead.createdDate
     lead.followUpDate = updated_lead.followUpDate
