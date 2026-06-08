@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Lead as LeadModel } from '../../../core/models/lead.model';
-import { Lead as LeadService } from "../../../core/services/lead";
+import { Lead as LeadService } from '../../../core/services/lead';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
@@ -21,7 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './edit-lead.html',
   styleUrl: './edit-lead.css',
@@ -35,89 +35,47 @@ export class EditLead {
 
   private leadService = inject(LeadService);
 
-  leadId = Number(
-    this.route.snapshot.paramMap.get('id')
-  );
+  leadId = Number(this.route.snapshot.paramMap.get('id'));
 
-  currentLead = this.leadService.getLeadById(
-    this.leadId
-  );
+  currentLead = this.leadService.getLeadById(this.leadId);
 
   editForm = this.fb.group({
+    recruiterName: [this.currentLead?.recruiterName || '', Validators.required],
 
-    recruiterName: [
-      this.currentLead?.recruiterName || '',
-      Validators.required
-    ],
+    companyName: [this.currentLead?.companyName || '', Validators.required],
 
-    companyName: [
-      this.currentLead?.companyName || '',
-      Validators.required
-    ],
+    contactNumber: [this.currentLead?.contactNumber || '', Validators.required],
 
-    contactNumber: [
-      this.currentLead?.contactNumber || '',
-      Validators.required
-    ],
+    cctc: [this.currentLead?.cctc || '', Validators.required],
 
-    cctc: [
-      this.currentLead?.cctc || '',
-      Validators.required
-    ],
+    ectc: [this.currentLead?.ectc || '', Validators.required],
 
-    ectc: [
-      this.currentLead?.ectc || '',
-      Validators.required
-    ],
+    jobType: [this.currentLead?.jobType || '', Validators.required],
 
-    jobType: [
-      this.currentLead?.jobType || '',
-      Validators.required
-    ],
+    status: [this.currentLead?.status || 'Applied', Validators.required],
 
-    status: [
-      this.currentLead?.status || 'Applied',
-      Validators.required
-    ],
+    candidateName: [this.currentLead?.candidateName || '', Validators.required],
 
-    candidateName: [
-      '',
-      Validators.required
-    ],
+    createdDate: [this.currentLead?.createdDate || ''],
 
-    createdDate: [
-      this.currentLead?.createdDate || ''
-    ],
+    followUpDate: [this.currentLead?.followUpDate || ''],
 
-    followUpDate: [
-      this.currentLead?.followUpDate || ''
-    ],
-
-    notes: [
-      this.currentLead?.notes || ''
-    ]
-
+    notes: [this.currentLead?.notes || ''],
   });
 
   onSubmit() {
-
     if (this.editForm.invalid) {
       return;
     }
 
     const updatedLead = {
-
       id: this.leadId,
 
-      ...this.editForm.value
-
+      ...this.editForm.value,
     } as LeadModel;
 
-    this.leadService.updateLead(
-      updatedLead
-    );
+    this.leadService.updateLead(updatedLead);
 
     this.router.navigate(['/dashboard']);
-
   }
 }

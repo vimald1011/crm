@@ -40,16 +40,19 @@ export class Auth {
     });
   }
 
-  signup(user: SignupRequest, callback?: () => void) {
+  signup(user: SignupRequest, successCallback?: () => void, errorCallback?: () => void) {
     this.http.post(`${this.apiUrl}/signup`, user).subscribe({
       next: () => {
-        if (callback) {
-          callback();
+        if (successCallback) {
+          successCallback();
         }
       },
 
       error: (error) => {
         console.error('Signup failed:', error);
+        if (errorCallback) {
+          errorCallback();
+        }
       },
     });
   }
