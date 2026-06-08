@@ -7,7 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { Loader } from '../../../shared/components/loader/loader';
 import { MatInputModule } from '@angular/material/input';
 import { signal } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     ReactiveFormsModule,
     RouterLink,
+    Loader,
 
     MatCardModule,
     MatFormFieldModule,

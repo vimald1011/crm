@@ -1,4 +1,7 @@
 <div class="login-container">
+  @if (isLoading()) {
+    <app-loader />
+  }
   <mat-card class="login-card">
     <h1>Login</h1>
 
@@ -15,15 +18,7 @@
         <input matInput type="password" formControlName="password" />
       </mat-form-field>
 
-      <button mat-raised-button type="submit" [disabled]="isLoading()">
-        @if (!isLoading()) {
-          Login
-        } @else {
-          <mat-spinner diameter="20"> </mat-spinner>
-
-          <span style="margin-left: 8px"> Logging in... </span>
-        }
-      </button>
+      <button mat-raised-button type="submit" [disabled]="isLoading()">Login</button>
     </form>
 
     <p class="signup-text">
