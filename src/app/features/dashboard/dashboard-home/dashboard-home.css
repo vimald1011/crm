@@ -29,21 +29,17 @@
 }
 
 @media (max-width: 768px) {
-
   .dashboard-header {
-
     align-items: flex-start;
 
     flex-direction: column;
   }
-
 }
 
 .stats-grid {
   display: grid;
 
-  grid-template-columns:
-    repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
   gap: 20px;
 
@@ -98,7 +94,7 @@
   justify-content: space-between;
 
   align-items: center;
-  
+
   margin-bottom: 24px;
 }
 
@@ -138,6 +134,12 @@
   margin-bottom: 20px;
 }
 
+.header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .detail-item {
   display: flex;
 
@@ -146,7 +148,8 @@
   gap: 8px;
 }
 
-.notes-section, .lead-container {
+.notes-section,
+.lead-container {
   margin-top: 20px;
 
   padding: 16px;

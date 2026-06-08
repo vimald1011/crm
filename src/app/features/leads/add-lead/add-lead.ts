@@ -1,10 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Lead } from '../../../core/services/lead';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -29,96 +25,55 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
   ],
 
   templateUrl: './add-lead.html',
 
-  styleUrl: './add-lead.css'
+  styleUrl: './add-lead.css',
 })
 export class AddLead {
-
   private leadService = inject(Lead);
 
   private fb = inject(FormBuilder);
 
   leadForm = this.fb.group({
+    recruiterName: ['', Validators.required],
 
-    recruiterName: [
-      '',
-      Validators.required
-    ],
+    companyName: ['', Validators.required],
 
-    companyName: [
-      '',
-      Validators.required
-    ],
+    contactNumber: ['', [Validators.required, Validators.minLength(10)]],
 
-    contactNumber: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(10)
-      ]
-    ],
+    cctc: ['', Validators.required],
 
-    cctc: [
-      '',
-      Validators.required
-    ],
+    ectc: ['', Validators.required],
 
-    ectc: [
-      '',
-      Validators.required
-    ],
-
-    jobType: [
-      '',
-      Validators.required
-    ],
+    jobType: ['', Validators.required],
 
     notes: [''],
 
-    status: [
-      'Applied',
-      Validators.required
-    ],
+    status: ['Applied', Validators.required],
 
-    candidateName: [
-      '',
-      Validators.required
-    ],
+    candidateName: ['', Validators.required],
 
-    createdDate: [
-      new Date().toISOString()
-    ],
+    createdDate: [new Date().toISOString()],
 
-      followUpDate: [
-        ''
-    ],
-
+    followUpDate: [''],
   });
 
   onSubmit() {
-
     if (this.leadForm.invalid) {
       return;
     }
 
     const newLead = {
-
       id: Date.now(),
 
-      ...this.leadForm.value
-
+      ...this.leadForm.value,
     };
 
-    this.leadService.addLead(
-      newLead as any
-    );
+    this.leadService.addLead(newLead as any);
 
     this.leadForm.reset();
-
   }
-
 }

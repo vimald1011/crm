@@ -13,6 +13,7 @@ import { ConfirmDialog } from '../../../shared/components/confirm-dialog/confirm
 import { MatChipsModule } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
 import { Auth } from '../../../core/services/auth';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -27,13 +28,12 @@ import { Auth } from '../../../core/services/auth';
     MatSelectModule,
     MatDialogModule,
     MatChipsModule,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './dashboard-home.html',
   styleUrl: './dashboard-home.css',
 })
 export class DashboardHome implements OnInit {
-
   searchText = signal('');
   selectedStatus = signal('');
   selectedJobType = signal('');
@@ -48,130 +48,80 @@ export class DashboardHome implements OnInit {
   currentUser = this.auth.currentUser;
 
   filteredLeads = computed(() => {
+    return this.leads().filter((lead) => {
+      const matchesSearch =
+        lead.recruiterName.toLowerCase().includes(this.searchText().toLowerCase()) ||
+        lead.companyName.toLowerCase().includes(this.searchText().toLowerCase()) ||
+        lead.candidateName.toLowerCase().includes(this.searchText().toLowerCase());
 
-  return this.leads().filter(lead => {
+      const matchesJobType = !this.selectedJobType() || lead.jobType === this.selectedJobType();
 
-    const matchesSearch =
+      const matchesStatus = !this.selectedStatus() || lead.status === this.selectedStatus();
 
-      lead.recruiterName
-        .toLowerCase()
-        .includes(
-          this.searchText().toLowerCase()
-        )
-
-      ||
-
-      lead.companyName
-        .toLowerCase()
-        .includes(
-          this.searchText().toLowerCase()
-        )
-
-      ||
-
-      lead.candidateName
-        .toLowerCase()
-        .includes(
-          this.searchText().toLowerCase()
-        );
-
-    const matchesJobType =
-
-      !this.selectedJobType()
-
-      ||
-
-      lead.jobType === this.selectedJobType();
-
-
-      const matchesStatus = !this.selectedStatus()
-
-  ||
-
-  lead.status === this.selectedStatus();
-
-    return (
-      matchesSearch &&
-      matchesJobType &&
-      matchesStatus
-    );
-
+      return matchesSearch && matchesJobType && matchesStatus;
+    });
   });
 
-});
-
   totalLeads = computed(() => {
+    return this.leads().length;
+  });
 
-  return this.leads().length;
+  totalCompanies = computed(() => {
+    const companies = new Set(this.leads().map((lead) => lead.companyName));
 
-});
+    return companies.size;
+  });
 
-totalCompanies = computed(() => {
+  remoteJobs = computed(() => {
+    return this.leads().filter((lead) => lead.jobType === 'Remote').length;
+  });
 
-  const companies = new Set(
+  highestECTC = computed(() => {
+    if (this.leads().length === 0) {
+      return 0;
+    }
 
-    this.leads().map(
-      lead => lead.companyName
-    )
+    return Math.max(...this.leads().map((lead) => Number(lead.ectc)));
+  });
 
-  );
-
-  return companies.size;
-
-});
-
-remoteJobs = computed(() => {
-
-  return this.leads().filter(
-    lead => lead.jobType === 'Remote'
-  ).length;
-
-});
-
-highestECTC = computed(() => {
-
-  if (this.leads().length === 0) {
-    return 0;
-  }
-
-  return Math.max(
-
-    ...this.leads().map(
-      lead => Number(lead.ectc)
-    )
-
-  );
-
-});
-
-upcomingFollowUps = computed(() => {
-
-  return this.leads().filter(lead =>
-
-    lead.followUpDate
-
-  );
-
-});
+  upcomingFollowUps = computed(() => {
+    return this.leads().filter((lead) => lead.followUpDate);
+  });
 
   leads = this.leadService.leads;
 
   deleteLead(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialog);
 
-    const dialogRef = this.dialog.open(
-      ConfirmDialog
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-
         this.leadService.deleteLead(id);
-
       }
-
     });
+  }
 
+  exportToExcel() {
+    const data = this.filteredLeads().map((lead) => ({
+      'Candidate Name': lead.candidateName,
+      'Recruiter Name': lead.recruiterName,
+      'Company Name': lead.companyName,
+      'Contact Number': lead.contactNumber,
+      Status: lead.status,
+      'Job Type': lead.jobType,
+      'CCTC (LPA)': lead.cctc,
+      'ECTC (LPA)': lead.ectc,
+      'Created Date': lead.createdDate,
+      'Follow Up Date': lead.followUpDate,
+      Notes: lead.notes,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Leads');
+
+    XLSX.writeFile(workbook, 'recruiter-leads.xlsx');
   }
 
   logout() {
