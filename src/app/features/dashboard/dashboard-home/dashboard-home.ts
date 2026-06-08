@@ -65,6 +65,14 @@ export class DashboardHome implements OnInit {
         .toLowerCase()
         .includes(
           this.searchText().toLowerCase()
+        )
+
+      ||
+
+      lead.candidateName
+        .toLowerCase()
+        .includes(
+          this.searchText().toLowerCase()
         );
 
     const matchesJobType =
@@ -73,29 +81,20 @@ export class DashboardHome implements OnInit {
 
       ||
 
-      lead.jobType === this.selectedJobType()
-      
-      ||
+      lead.jobType === this.selectedJobType();
 
-      lead.candidateName
-      .toLowerCase()
-      .includes(
-        this.searchText().toLowerCase()
-      );
 
-      const matchesStatus =
-
-  !this.selectedStatus()
+      const matchesStatus = !this.selectedStatus()
 
   ||
 
   lead.status === this.selectedStatus();
 
     return (
-  matchesSearch &&
-  matchesJobType &&
-  matchesStatus
-);
+      matchesSearch &&
+      matchesJobType &&
+      matchesStatus
+    );
 
   });
 

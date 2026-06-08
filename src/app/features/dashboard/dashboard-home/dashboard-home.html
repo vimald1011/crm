@@ -106,7 +106,7 @@
 
     <input
       matInput
-      placeholder="Recruiter or Company"
+      placeholder="Candidate, Recruiter or Company"
 
       [ngModel]="searchText()"
 
@@ -213,12 +213,16 @@
   <div>
 
     <h2>
-      {{ lead.recruiterName }}
-    </h2>
+  {{ lead.candidateName }}
+</h2>
 
-    <p class="company-name">
-      {{ lead.companyName }}
-    </p>
+<p class="company-name">
+  {{ lead.companyName }}
+</p>
+
+<p class="recruiter-name">
+  Recruiter: {{ lead.recruiterName }}
+</p>
 
   </div>
 

@@ -11,7 +11,11 @@
 
   flex-wrap: wrap;
 }
-
+.recruiter-name {
+  color: #666;
+  font-size: 14px;
+  margin-top: 4px;
+}
 .dashboard-header h1 {
   margin: 0;
 
