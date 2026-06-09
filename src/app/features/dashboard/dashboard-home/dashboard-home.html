@@ -122,15 +122,17 @@
   <div class="lead-container">
     <div class="lead-header">
       <div>
-        <h2>
+        <p>
           {{ lead.candidateName }}
-        </h2>
+        </p>
 
         <p class="company-name">
           {{ lead.companyName }}
         </p>
 
-        <p class="recruiter-name">Recruiter: {{ lead.recruiterName }}</p>
+        <p class="recruiter-name">
+          Recruiter: <span class="recruiter-name">{{ lead.recruiterName }}</span>
+        </p>
       </div>
 
       <mat-chip
